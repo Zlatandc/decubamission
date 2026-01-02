@@ -1,15 +1,4 @@
 --- Mission Manager
---- Crea e registra missioni
---- NON gestisce reward
-
-MissionManager = {}
-
--- TODO: createMission(data)
--- TODO: destroyMission(id)
--- TODO: getMission(id)
-
-return MissionManager
---- Mission Manager
 --- Responsabile della creazione, registrazione e distruzione missioni
 --- NON gestisce reward
 --- NON comunica con il client
@@ -33,7 +22,7 @@ local nextMissionId = 0
 --- Generate a unique mission id
 --- @return number
 local function generateMissionId()
-    nextMissionId += 1
+    nextMissionId = nextMissionId + 1
     return nextMissionId
 end
 

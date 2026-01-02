@@ -25,7 +25,10 @@ server_scripts {
     'server/bootstrap.lua',
 
     -- mission core
-    'server/mission/*.lua',
+    
+    'server/mission/manager.lua',
+    'server/mission/state.lua',
+    'server/mission/lifecycle.lua',
 
     -- reward system
     'server/reward/*.lua',
