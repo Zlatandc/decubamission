@@ -22,13 +22,16 @@ shared_scripts {
 -- =========================
 server_scripts {
     '@oxmysql/lib/MySQL.lua', -- se usi oxmysql
-    'server/bootstrap.lua',
+    
 
     -- mission core
     
-    'server/mission/manager.lua',
-    'server/mission/state.lua',
-    'server/mission/lifecycle.lua',
+ 'server/mission/manager.lua',
+'server/mission/lifecycle.lua',
+'server/mission/state.lua',
+'server/bootstrap.lua',
+
+
 
     -- reward system
     'server/reward/*.lua',

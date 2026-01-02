@@ -3,11 +3,7 @@
 --- Server-authoritative
 --- Nessuna logica di gameplay
 
-local MissionState = {}
-
-MissionLifecycle.handleStateChange(mission, newState, reason)
-
-
+MissionState = {}
 
 -- =========================
 -- VALID STATES
@@ -50,10 +46,6 @@ local validTransitions = {
 -- INTERNAL HELPERS
 -- =========================
 
---- Check if a state transition is valid
---- @param from string
---- @param to string
---- @return boolean
 local function isValidTransition(from, to)
     return validTransitions[from] and validTransitions[from][to] == true
 end
@@ -62,11 +54,6 @@ end
 -- PUBLIC API
 -- =========================
 
---- Set mission state with validation
---- @param mission table
---- @param newState string
---- @param reason string|nil
---- @return boolean
 function MissionState.set(mission, newState, reason)
     assert(mission, 'Mission is required')
     assert(newState, 'New state is required')
@@ -78,36 +65,29 @@ function MissionState.set(mission, newState, reason)
     end
 
     if not isValidTransition(currentState, newState) then
-        print(('[MissionState] Invalid transition %s → %s (mission %s)')
+        print(('[MissionState] Invalid transition %s -> %s (mission %s)')
             :format(currentState, newState, mission.id))
         return false
     end
 
     mission.state = newState
-mission.stateChangedAt = os.time()
+    mission.stateChangedAt = os.time()
 
-print(('[MissionState] Mission %s state changed: %s → %s (%s)')
-    :format(
-        mission.id,
-        currentState,
-        newState,
-        reason or 'no reason'
+    print(('[MissionState] Mission %s state changed: %s -> %s (%s)')
+        :format(
+            mission.id,
+            currentState,
+            newState,
+            reason or 'no reason'
+        )
     )
-)
 
--- 🔗 LIFECYCLE HOOK (PUNTO UNICO)
-MissionLifecycle.handleStateChange(mission, newState, reason)
+    -- 🔗 LIFECYCLE HOOK (UNICO PUNTO)
+    MissionLifecycle.handleStateChange(mission, newState, reason)
 
-return true
-
+    return true
 end
 
---- Check current mission state
---- @param mission table
---- @param state string
---- @return boolean
 function MissionState.is(mission, state)
     return mission and mission.state == state
 end
-
-return MissionState
